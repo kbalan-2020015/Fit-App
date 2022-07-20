@@ -1,0 +1,206 @@
+<app-navbar></app-navbar>
+
+<div *ngIf="token && identity.role === 'MANAGER' || identity.role === 'ADMIN'" class="text-center m-3">
+    <button class="btn btn-success m-2" data-bs-toggle="modal" data-bs-target="#newRestaurant">
+        <i class="fa-solid fa-circle-plus"></i> Save Restaurant
+    </button>
+</div>
+<hr *ngIf="token && identity.role === 'MANAGER' || identity.role === 'ADMIN'">
+
+<h2 *ngIf="token && identity.role === 'CLIENT'" class="text-center">From Fitapp we bring you restaurant recommendations
+</h2>
+<div class="wrapper" *ngIf="restaurants">
+    <div class="card" *ngFor="let restaurant of restaurants">
+        <img src="../../../assets/images/logo.png" class="card-img-top" height="50" alt="" style="margin-top: -9%;">
+        <h3 class="card-title text-center">{{restaurant.name}}</h3>
+        <h6 class="card-subtitle mb-2 text-muted">Description: {{restaurant.description}}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">Address: {{restaurant.address}}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">Speciality: {{restaurant.speciality}}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">Calification: {{restaurant.calification}}<i class="fa-solid fa-star"></i></h6>
+        <h6 class="card-subtitle mb-2 text-muted">OPEN: {{restaurant.open}}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">CLOSE: {{restaurant.close}}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">Phone: {{restaurant.phone}}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">Destinatary: {{restaurant.client.username}}</h6>
+
+        <p class="text-center">Please tell us ¿Are you satisfied?</p>
+        <h6     class="text-success text-center" *ngIf="restaurant.calificationUser == true"> Raiting: {{restaurant.calificationUser}} || by  {{restaurant.client.username}}</h6>
+        <h6     class="text-danger text-center" *ngIf="restaurant.calificationUser == false" > Raiting: {{restaurant.calificationUser}} || by  {{restaurant.client.username}}</h6>
+
+        <div class="text-center  ms-3">
+            <button *ngIf="token && identity.role === 'MANAGER' || identity.role === 'ADMIN'"
+                (click)="deleteRestaurant(restaurant._id)" class="btn btn-outline-danger btn-icon-split">Delete</button>
+            <button *ngIf="token && identity.role === 'MANAGER' || identity.role === 'ADMIN'"
+                (click)="getRestaurant(restaurant._id)" class="btn btn-outline-success btn-icon-split m-2"
+                data-bs-toggle="modal" data-bs-target="#updateRestaurant">Update</button>
+            <button *ngIf="token && identity.role === 'CLIENT'" (click)="getRestaurant(restaurant._id)"
+                class="btn btn-outline-warning btn-icon-split m-2" data-bs-toggle="modal"
+                data-bs-target="#updateRestaurant">Rate the restaurant</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="newRestaurant" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #217546;">
+                <h5 class="modal-title"><img src="../../../assets/images/logo.png" height="35" alt=""> Save Restaurant
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #newRestaurantForm="ngForm">
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input [(ngModel)]="restaurant.name" name="name" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <input [(ngModel)]="restaurant.description" name="description" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        <input [(ngModel)]="restaurant.address" name="address" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Speciality</label>
+                        <input [(ngModel)]="restaurant.speciality" name="speciality" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Calification</label>
+                        <input [(ngModel)]="restaurant.calification" name="calification" min="0" max="5" type="number"
+                            class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">OPEN</label>
+                        <input [(ngModel)]="restaurant.open" name="open" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">CLOSE</label>
+                        <input [(ngModel)]="restaurant.close" name="close" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone</label>
+                        <input [(ngModel)]="restaurant.phone" name="phone" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">DESTINATARY</label>
+                        <select [(ngModel)]="restaurant.client" name="role" class="form-select"
+                            aria-label="Defaul select example">
+                            <option disabled value="" selected>Choose a Destinatary</option>
+                            <option *ngFor="let user of usersClient" value="{{user._id}}">
+                                {{user.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Discard Changes
+                        </button>
+                        <button type="submit" (click)="newRestaurant(newRestaurantForm)" class="btn btn-success"
+                            data-bs-dismiss="modal">
+                            Save Restaurant
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="token && identity.role === 'MANAGER' || identity.role === 'ADMIN'" class="modal fade" id="updateRestaurant"
+    tabindex="-1" aria-labelledby="updateRestaurant" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #217546;">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-pencil" aria-hidden="true"><img
+                            src="../../../assets/images/logo.png" height="35" alt=""> Update
+                        Restaurant</i> </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="updateRestaurant()" *ngIf="restaurantUpdate">
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input [(ngModel)]="restaurantUpdate.name" name="name" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <input [(ngModel)]="restaurantUpdate.description" name="description" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        <input [(ngModel)]="restaurantUpdate.address" name="address" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Speciality</label>
+                        <input [(ngModel)]="restaurantUpdate.speciality" name="speciality" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Calification</label>
+                        <input [(ngModel)]="restaurantUpdate.calification" name="calification" min="0" max="5" type="number"
+                            class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">OPEN</label>
+                        <input [(ngModel)]="restaurantUpdate.open" name="open" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">CLOSE</label>
+                        <input [(ngModel)]="restaurantUpdate.close" name="close" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone</label>
+                        <input [(ngModel)]="restaurantUpdate.phone" name="phone" type="text" class="form-control">
+                    </div>
+                    <label class="form-label">DESTINATARY</label>
+                    <select [(ngModel)]="restaurantUpdate.client" name="client" class="form-select"
+                        aria-label="Default select example">
+                        <option disabled value="">Update a Destinatary</option>
+                        <option *ngFor="let user of usersClient" value="{{user._id}}">{{user.username}}</option>
+                    </select>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i
+                                class="fa fa-times-circle" aria-hidden="true"></i>Discard
+                        </button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal"><i class="fa fa-floppy-o"
+                                aria-hidden="true"></i>Update Restaurant
+                        </button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="token && identity.role === 'CLIENT'" class="modal fade" id="updateRestaurant" tabindex="-1"
+    aria-labelledby="updateRestaurant" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #217546;">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-pencil" aria-hidden="true"><img
+                            src="../../../assets/images/logo.png" height="35" alt="">Rate the Restaurant
+                    </i> </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="updateRestaurant()" *ngIf="restaurantUpdate">
+                    <label class="form-label">¿Are you satisfied?</label>
+                    <select [(ngModel)]="restaurantUpdate.calificationUser" name="calificationUser" class="form-select">
+                        <option selected>Open this select menu</option>
+                        <option value="true">GOOD</option>
+                        <option value="false">BAD</option>
+                    </select>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i
+                                class="fa fa-times-circle" aria-hidden="true"></i>Discard
+                        </button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal"><i class="fa fa-floppy-o"
+                                aria-hidden="true"></i>Save your rank
+                        </button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

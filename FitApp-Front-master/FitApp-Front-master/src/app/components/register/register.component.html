@@ -1,0 +1,133 @@
+<section class="h-100 h-custom gradient-custom-2">
+    <div class="container py-1 -100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-14">
+                <div class="card card-registration card-registration-2"
+                    style="border-radius: 18px; background-color: #cedfd5;">
+                    <div class="card-body p-0">
+                        <div class="row g-0">
+                            <div class="p-4">
+                                <h3 class="fw-normal mb-2 text-center" style="color: #31975e;"> Account Information
+                                </h3>
+                                <form #registerForm="ngForm" (ngSubmit)="register()">
+                                    <div class="row">
+
+                                        <div class="col-md-4 mb-4 pb-2">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Examplev2"></label>
+                                                <input [(ngModel)]="user.name" #name="ngModel" name="name" type="text"
+                                                    id="form3Examplev2" placeholder="Name"
+                                                    class="form-control form-control-lg" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4 pb-2">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Examplev3"></label>
+                                                <input [(ngModel)]="user.surname" name="surname" type="text"
+                                                    id="form3Examplev3" placeholder="Surname"
+                                                    class="form-control form-control-lg">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4 pb-2">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Examplev3"></label>
+                                                <input [(ngModel)]="user.username" #username="ngModel" name="username"
+                                                    type="text" id="form3Examplev3" placeholder="Username"
+                                                    class="form-control form-control-lg">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4 pb-2">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Examplev3"></label>
+                                                <input [(ngModel)]="user.email" #email="ngModel" name="email"
+                                                    type="text" id="form3Examplev3" placeholder="Email"
+                                                    class="form-control form-control-lg">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4 pb-2">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Examplev3"></label>
+                                                <input (keyup)="checkPassword()" [(ngModel)]="user.password"
+                                                    #password="ngModel" name="password" type="password"
+                                                    class="form-control form-control-lg" placeholder="Password"
+                                                    aria-label="Password" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4 pb-2">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Examplev3"></label>
+                                                <input (keyup)="checkPassword()" [(ngModel)]="repeatPass"
+                                                    name="repeatPass" type="password"
+                                                    class="form-control form-control-lg" placeholder="Repeat Password"
+                                                    aria-label="Repite tu contraseña" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4 pb-2">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Examplev3"></label>
+                                                <input [(ngModel)]="user.phone" name="phone" type="text"
+                                                    id="form3Examplev3" placeholder="Phone"
+                                                    class="form-control form-control-lg">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+
+                                            <label class="form-label">¿How do you want to join?</label>
+                                            <select [(ngModel)]="user.role" name="role" class="form-select">
+                                                <option value="CLIENT">CLIENT</option>
+                                                <option value="MANAGER">MANAGER</option>
+                                            </select>
+
+                                        </div>
+                                        <h3 class="fw-normal mb-2 text-center" style="color: #31975e;">Personal
+                                            Information</h3>
+                                        <div class="col-md-4 mb-4 pb-2">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Examplev3"></label>
+                                                <input [(ngModel)]="user.age" name="age" type="text" id="form3Examplev3"
+                                                    placeholder="Age" class="form-control form-control-lg">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4 pb-2">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Examplev3"></label>
+                                                <input [(ngModel)]="user.height" name="height" type="text"
+                                                    id="form3Examplev3" placeholder="Height"
+                                                    class="form-control form-control-lg">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4 pb-2">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Examplev3"></label>
+                                                <input [(ngModel)]="user.weight" name="weight" type="text"
+                                                    id="form3Examplev3" placeholder="Weight"
+                                                    class="form-control form-control-lg">
+                                            </div>
+                                        </div>
+                                        <p>
+                                            <input ngModel name="checkboxTerms" class="form-check-input "
+                                                type="checkbox" required>
+                                            <label class="form-check-label ms-2">Aceptar <a
+                                                    href="https://en.wikipedia.org/wiki/Contractual_term"
+                                                    target="_blank" rel="noopener noreferrer">terminos y
+                                                    condiciones</a></label>
+
+
+                                            <button class="btn btn-outline-primary btn-lg px-1"
+                                                type="submit">Registrarse</button>
+                                        </p>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>

@@ -1,0 +1,254 @@
+<app-navbar></app-navbar>
+
+<div *ngIf="token && identity.role === 'CLIENT'" class="card border-dark "
+    style="max-width: 30rem; margin: 1% 3%;">
+    <div class="card-header text-center " style="margin: 0% 10%;" >
+        <h5>{{usersRest.getIdentity().username}}</h5></div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4 ">
+                <div class="form-outline">
+                    <label class="form-label" for="form3Examplev2"></label>
+                    <input disabled name="name" type="text" id="form3Examplev2"
+                        placeholder="Age:  {{usersRest.getIdentity().age}}" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="form-outline">
+                    <label class="form-label" for="form3Examplev3"></label>
+                    <input disabled name="surname" type="text" id="form3Examplev3"
+                        placeholder="Height:  {{usersRest.getIdentity().height}}" class="form-control ">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-outline">
+                    <label class="form-label" for="form3Examplev3"></label>
+                    <input disabled name="surname" type="text" id="form3Examplev3"
+                        placeholder="Weight:  {{usersRest.getIdentity().weight}}" class="form-control ">
+                </div>
+            </div>
+
+            <h4>{{usersRest.getIdentity().name}} {{usersRest.getIdentity().surname}}</h4>
+
+            <div *ngIf="token && identity.role === 'CLIENT'" class="form-input mt-0" style="max-width: 60rem; margin: 0% 0% -4% 140%; margin-top: 45%; ">
+                <input [(ngModel)]="search" placeholder="Search yours Recipes by your Username">
+                <button type="submit" class="search-btn"><i class='fa fa-search'></i></button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<br>
+<div *ngIf="token && identity.role === 'MANAGER' || identity.role === 'ADMIN'" class="text-center m-3">
+    <button class="btn btn-success m-2" data-bs-toggle="modal" data-bs-target="#newRoutine">
+        <i class="fa-solid fa-circle-plus"></i> Save Routine
+    </button>
+</div>
+<hr>
+<div class="text-center m-4">
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Week</th>
+                <th scope="col">Day</th>
+                <th scope="col">Description</th>
+                <th scope="col">Time</th>
+                <th scope="col">DificultyLevel</th>
+                <th scope="col">Priority</th>
+                <th scope="col">Complete</th>
+                <th scope="col">Client</th>
+                <th scope="col">
+                    Actions
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill ms-2" viewBox="0 0 16 16">
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                    </svg>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let routine of routines | client:search ; let i = index ">
+                <th scope="row">{{i + 1}}</th>
+                <td>{{routine.name}}</td>
+                <td>{{routine.week}}</td>
+                <td>{{routine.day}}</td>
+                <td>{{routine.description}}</td>
+                <td>{{routine.time}}</td>
+                <td>{{routine.dificultyLevel}}</td>
+                <td>{{routine.priority}}</td>
+                <td class="bg-success" *ngIf="routine.complete == true">{{routine.complete}}</td>
+                <td class="bg-danger" *ngIf="routine.complete == false">{{routine.complete}}</td>
+                <td>{{routine.client.username}}</td>
+                <td>
+                    <div>
+                    <button (click)="getRoutine(routine._id)" class="btn btn-warning me-2" data-bs-toggle="modal"
+                        data-bs-target="#updateRoutine">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <button *ngIf="token && identity.role === 'MANAGER' || identity.role === 'ADMIN'" (click)="deleteRoutine(routine._id)" class="btn btn-danger">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                    </div>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="modal fade" id="newRoutine" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+                <div class="modal-header" style="background-color: #217546;">
+                    <h5 class="modal-title"><img src="../../../assets/images/logo.png" height="35" alt=""> Save Routine</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form #newRoutineForm="ngForm">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input [(ngModel)]="routine.name" name="name" type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Week</label>
+                            <input [(ngModel)]="routine.week" name="week" type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Day</label>
+                            <input [(ngModel)]="routine.day" name="day" type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <input [(ngModel)]="routine.description" name="description" type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Time</label>
+                            <input [(ngModel)]="routine.time" name="time" type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">DificultyLevel</label>
+                            <input [(ngModel)]="routine.dificultyLevel" name="dificultyLevel" type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Priority</label>
+                            <input [(ngModel)]="routine.priority" placeholder="range 1 - 10" name="priority" min="1" max="10" type="number" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">CLIENT</label>
+                            <select [(ngModel)]="routine.client" name="role" class="form-select"
+                                aria-label="Defaul select example">
+                                <option disabled value="" selected>Choose a Destinatary</option>
+                                <option *ngFor="let user of usersClient" value="{{user._id}}">
+                                    {{user.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Discard Changes
+                            </button>
+                            <button type="submit" (click)="newRoutine(newRoutineForm)" class="btn btn-success"
+                                data-bs-dismiss="modal">
+                                Save Routine
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </div>
+</div>
+
+<div *ngIf="token && identity.role === 'MANAGER' || identity.role === 'ADMIN'" class="modal fade" id="updateRoutine" tabindex="-1" aria-labelledby="updateRoutine" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #217546;">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-pencil" aria-hidden="true"><img src="../../../assets/images/logo.png" height="35" alt=""> Update
+                        Routine</i> </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="updateRoutine()" *ngIf="routineUpdate">
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input [(ngModel)]="routineUpdate.name" name="name" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Week</label>
+                        <input [(ngModel)]="routineUpdate.week" name="week" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Day</label>
+                        <input [(ngModel)]="routineUpdate.day" name="day" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <input [(ngModel)]="routineUpdate.description" name="description" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Time</label>
+                        <input [(ngModel)]="routineUpdate.time" name="time" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">DificultyLevel</label>
+                        <input [(ngModel)]="routineUpdate.dificultyLevel" name="dificultyLevel" type="number" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Priority</label>
+                        <input [(ngModel)]="routineUpdate.priority" placeholder="range 1 - 10" name="priority" min="1" max="10" type="number" class="form-control">
+                    </div>
+                    <label class="form-label">DESTINATARY</label>
+                    <select [(ngModel)]="routineUpdate.client" name="client" class="form-select"
+                        aria-label="Default select example">
+                        <option disabled value="">Update a Destinatary</option>
+                        <option *ngFor="let user of usersClient" value="{{user._id}}">{{user.username}}</option>
+                    </select>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i
+                                class="fa fa-times-circle" aria-hidden="true"></i>Discard
+                        </button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal"><i class="fa fa-floppy-o"
+                                aria-hidden="true"></i>Update Routine
+                        </button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="token && identity.role === 'CLIENT'" class="modal fade" id="updateRoutine" tabindex="-1" aria-labelledby="updateRoutine" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #217546;">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-pencil" aria-hidden="true"><img src="../../../assets/images/logo.png" height="35" alt=""> Update
+                        Routine</i> </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="updateRoutine()" *ngIf="routineUpdate">
+                    <label class="form-label" >Complete</label>
+                    <select [(ngModel)]="routineUpdate.complete" name="complete" class="form-select">
+                        <option selected>Open this select menu</option>
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                    </select>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i
+                                class="fa fa-times-circle" aria-hidden="true"></i>Discard
+                        </button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal"><i class="fa fa-floppy-o"
+                                aria-hidden="true"></i>Update Routine
+                        </button>
+
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

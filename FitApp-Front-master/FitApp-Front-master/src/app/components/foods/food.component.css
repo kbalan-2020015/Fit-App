@@ -1,0 +1,228 @@
+
+hr{
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.card-body{
+    border-color: black;
+}
+
+input{
+    border-color: black;
+   }
+
+.modal-header {
+	color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #C3C7C9;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+
+.div
+{
+text-align: center;
+}
+
+.container{
+   max-width: 1200px;
+   padding:3rem 2rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.form-input {
+	display: flex;
+	align-items: center;
+	height: 36px;
+}
+.form-input input {
+	flex-grow: 1;
+	padding: 0 16px;
+	height: 100%;
+  margin-top: -44%;
+
+	border: none;
+	border-radius: 36px 0 0 36px;
+	outline: none;
+	width: 100%;
+	color: black;
+   background-color: #eceded;
+}
+
+.form-input button {
+	width: 36px;
+	height: 100%;
+	display: flex;
+  margin-top: -44%;
+
+	justify-content: center;
+	align-items: center;
+	background: #003474;
+	color: white;
+	font-size: 18px;
+	border: none;
+	outline: none;
+	border-radius: 0 36px 36px 0;
+	cursor: pointer;
+}
+
+
+.contenedor
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4rem;
+    height: auto;
+    padding: 0 20px;
+    background-color: #1cc88a;
+    border-radius: 4px;
+}
+
+.contenedor-perfil
+{
+    display: flex;
+    width: 800px;
+    height: auto;
+    background-color: #003474;
+    border-radius: 2px;
+}
+
+.descripcion
+{
+   text-align: center;
+   background-color: #003474;
+}
+
+
+
+
+  
+
+
+
+.box p
+{
+   padding-top: 15px;
+}
+
+.box h3
+{
+   padding-top: 15px;
+}
+
+.btn-success 
+{
+   color: #fff;
+   border-color: #1cc88a;
+ }
+ 
+ .btn-success:hover {
+   color: #fff;
+   border-color: #169b6b;
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ .btn-icon-split {
+   padding: 0;
+   overflow: hidden;
+   align-items: stretch;
+   margin-right: 1rem ;
+   margin-left: 1rem;
+ }
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+ 
+input{
+   height: auto;
+   background-color:#e6fdf0;
+   background-size: auto;
+}
+
+
+th
+{
+  cursor: pointer;
+}
+
+.text-gray-400 
+{
+  color: #d1d3e2 !important;
+}
+
+.arrowsTable
+{
+  margin-left: 30%;
+}
+
+.closeFilter
+{
+  color: black;
+  margin-right: 2%;
+  cursor: pointer;
+  height: 100%;
+}
+
+.closeFilter:hover
+{
+  color: #dc3545;
+}
+
+.cursor
+{
+  user-select: none;
+  cursor: pointer;
+}
+
+
+
+h5{
+    font-family: 'Spartan', sans-serif;
+    font-weight: 100;
+    color: #000000;
+}
+
+body{
+    font-family: 'Spartan', sans-serif ;
+}
+

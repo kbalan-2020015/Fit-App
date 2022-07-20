@@ -1,0 +1,171 @@
+<app-navbar></app-navbar>
+
+<div class="form-input mt-5">
+    <input [(ngModel)]="search" placeholder="Search User by Name">
+    <button type="submit" class="search-btn"><i class='fa fa-search'></i></button>
+</div>
+
+<div *ngIf="token && identity.role === 'ADMIN'" class="text-center m-3">
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newUser">New User
+        <div class="input-group mx-auto m-1" style="min-width: 115.7px; width: 15vw;">
+           
+
+        </div>
+    </button>
+</div>
+<hr>
+
+<div class="d-flex justify-content-center flex-wrap px-4">
+    <div *ngFor="let user of users | search:search" class="card m-2" style="width: 20rem;">
+        <div class="card-body" style="background-color: #c2ffdc;">
+            <h5 class="card-title text-center">{{user.username}}</h5>
+            <p class="card-subtitle mb-2 text-muted fst-italic">Name:  {{user.name}}</p>
+            <p class="card-subtitle mb-2">Surname:  {{user.surname}}</p>
+            <p class="card-subtitle mb-2">Email:  {{user.email}}</p>
+            <p class="card-subtitle mb-2">Phone:  {{user.phone}}</p>
+            <p  class="card-subtitle mb-2">Age:  {{user.age}}</p>
+            <p  *ngIf="user.role === 'CLIENT'" class="card-subtitle mb-2">Height:  {{user.height}}</p>
+            <p  *ngIf="user.role === 'CLIENT'" class="card-subtitle mb-2">Weight:  {{user.weight}}</p>
+            <p class="card-subtitle mb-2 text-muted fst-italic">Role:  {{user.role}}</p>
+            <div *ngIf="token && identity.role === 'ADMIN'">
+            <div *ngIf="user.role === 'CLIENT' || user.role === 'MANAGER'" class="btn-group d-flex" role="group">
+                <button (click)="getUser(user._id)" class="btn btn-warning flex-grow-1" data-bs-toggle="modal" data-bs-target="#updateUser" aria-controls="offcanvasExample"><i class="fa fa-pencil" aria-hidden="true"></i>Update
+                </button>
+                <button (click)="userDeleted(user._id)" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="newUser" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-title-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #217546;">
+                <h5 class="modal-title"><img src="../../../assets/images/logo.png" height="35" alt=""> Save User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #newUserForm="ngForm" >
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input [(ngModel)]="user.name" name="name" type="text" class="form-control">
+                        
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Surname</label>
+                        <input [(ngModel)]="user.surname" name="surname" type="text" class="form-control">
+                        
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input [(ngModel)]="user.username" name="username" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input [(ngModel)]="user.email" name="email" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone</label>
+                        <input [(ngModel)]="user.phone" name="phone" placeholder="+502 ---- ----" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input [(ngModel)]="user.password" name="password" type="password" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Age</label>
+                        <input [(ngModel)]="user.age" name="age" type="number" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Height</label>
+                        <input [(ngModel)]="user.height" name="height" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Weight</label>
+                        <input [(ngModel)]="user.weight" name="weight" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Role</label>
+                        <select  [(ngModel)]="user.role" name="role" class="form-select">
+                            <option disabled value="" selected>Choose a Role</option>
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="MANAGER">MANAGER</option>
+                            <option value="CLIENT">CLIENT</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Discard Changes</button>
+                        <button type="submit" (click)="newUser(newUserForm)" class="btn btn-success" data-bs-dismiss="modal">Save User</button>
+                    </div>
+
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="updateUser" tabindex="-1" aria-labelledby="updateUser" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header text-center" style="background-color: #217546;">
+                    <h5 class="modal-title"  id="exampleModalLabel"><i class="fa fa-pencil" aria-hidden="true"><img src="../../../assets/images/logo.png" height="35" alt=""> Update User</i></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form (ngSubmit)="updateUser()" *ngIf="userId">
+                        <div class="mb-3">
+                            <label for="nameInput" class="form-label">Name</label>
+                            <input [(ngModel)]="userId.name" name="name" type="text" class="form-control" id="nameInput" aria-describedby="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nameInput" class="form-label">Surname</label>
+                            <input [(ngModel)]="userId.surname" name="surname" type="text" class="form-control" id="nameInput" aria-describedby="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input [(ngModel)]="userId.username" name="username" class="form-control" type="text" id="username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="emailUser" class="form-label">Email</label>
+                            <input [(ngModel)]="userId.email" name="email" type="text" class="form-control" id="emailUser">
+                        </div>
+                       
+                        <div class="mb-3">
+                            <label for="phoneUser" class="form-label">Phone</label>
+                            <input [(ngModel)]="userId.phone" name="phone" type="text" class="form-control" id="phoneUser">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nameInput" class="form-label">Age</label>
+                            <input [(ngModel)]="userId.age" name="age" type="number" class="form-control" id="nameInput" aria-describedby="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nameInput" class="form-label">Height</label>
+                            <input [(ngModel)]="userId.height" name="height" type="text" class="form-control" id="nameInput" aria-describedby="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nameInput" class="form-label">Weight</label>
+                            <input [(ngModel)]="userId.weight" name="weight" type="text" class="form-control" id="nameInput" aria-describedby="name">
+                        </div>
+                        <label class="form-label">Role</label>
+                        <select [(ngModel)]="userId.role" name="role" class="form-select">
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="CLIENT">CLIENT</option>
+                            <option value="MANAGER">MANAGER</option>
+                        </select>
+                        <div class="modal-footer justify-content-center" >
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa fa-times-circle" aria-hidden="true"></i>Discard
+                            </button>
+                            <button type="submit" class="btn btn-success" data-bs-dismiss="modal"><i class="fa fa-floppy-o" aria-hidden="true"></i>Update User
+                            </button>
+    
+                        </div>
+                    </form>
+        </div>
+        </div>
+    
+    </div>
+    </div>

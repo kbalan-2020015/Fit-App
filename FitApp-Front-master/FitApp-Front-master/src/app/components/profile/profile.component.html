@@ -1,0 +1,166 @@
+<app-navbar></app-navbar>
+
+<body>
+
+    <section class="seccion-perfil-usuario">
+      <div class="perfil-usuario-header">
+        <div class="perfil-usuario-portada">
+          <div class="perfil-usuario-avatar">
+            <img crossorigin="anonymous" class="image" *ngIf="UserRest.getIdentity().image"
+              [src]="this.url + 'user/getImage/' + UserRest.getIdentity().image" />
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <div class="wrapper">
+      <div class="title">
+  
+        <h3 class="text-warning">
+          <small></small>
+    
+          {{UserRest.getIdentity().name}} : {{UserRest.getIdentity().age}}  años
+
+        </h3>
+      </div>
+      <form autocomplete="off" class="form">
+        <div class="inputfield">
+          <label><i class="fa-solid fa-file-signature"></i> Surname</label>
+          <input disabled [(ngModel)]="UserRest.getIdentity().surname" name="surname" autocomplete="off" type="text" class="input">
+        </div>
+        
+        <div class="inputfield">
+          <label><i class="fa-solid fa-user-check"></i> Username</label>
+          <input disabled [(ngModel)]="UserRest.getIdentity().username" name="username" autocomplete="off" type="text"
+            class="input">
+        </div>
+        
+        <div class="inputfield">
+          <label><i class="fa-solid fa-at"></i>  Email</label>
+          <input disabled  [(ngModel)]="UserRest.getIdentity().email" name="email" autocomplete="off" type="text" class="input">
+        </div>
+        <div class="inputfield">
+          <label><i class="fa-solid fa-phone"></i>  Phone</label>
+          <input disabled  [(ngModel)]="UserRest.getIdentity().phone" name="phone" autocomplete="off" type="text" class="input">
+        </div>
+  
+  
+        <div class="mt-5 modal-footer d-flex justify-content-center">
+          <button  type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteHotel">
+            <i class="fa fa-trash-alt" aria-hidden="true"></i> Delete Account
+          </button>
+          <button  type="submit" class="btn btn-success" data-bs-toggle="modal"
+          data-bs-target="#EditarUser">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Update Account
+          </button>
+         
+          <button  type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+              class="fa fa-file-image-o" aria-hidden="true"></i>
+            Upload Image
+          </button>
+        </div>
+      </form>
+    </div>
+  
+    <!--MODAL IMAGE-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: #5DADE2">
+            <h5 class="modal-title"  id="exampleModalLabel"> <i class="fa fa-file-image-o" aria-hidden="true"></i> <img src="../../../assets/images/logo.png" height="35" alt="">  Upload image</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="image" class="form-label">Select image: </label>
+              <input (change)="filesChange($event)" type="file" class="form-control" id="image">
+            </div>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"> <i class="fa fa-times-circle" aria-hidden="true"></i> Close</button>
+            <button (click)="uploadImage()" type="submit" data-bs-dismiss="modal" class="btn btn-primary"> <i class="fa fa-file-image-o"></i> Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!--MODAL EDITAR USUARIO-->
+    <div class="modal fade" id="EditarUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: #5DADE2;">
+            <h5 class="modal-title" id="exampleModalLabel"> <img src="../../../assets/images/logo.png" height="35" alt=""> Update My Profile</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+  
+            <form *ngIf="UserRest.getIdentity()">
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Name</label>
+                <input type="text" class="form-control" name="email" #name="ngModel" [(ngModel)]="ProfileModel.name">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Surname</label>
+                <input type="text" class="form-control" name="email" #surname="ngModel" [(ngModel)]="ProfileModel.surname">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Username</label>
+                <input type="email" class="form-control" name="username" #username="ngModel"
+                  [(ngModel)]="ProfileModel.username">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Email</label>
+                <input type="text" class="form-control" name="email" #email="ngModel" [(ngModel)]="ProfileModel.email">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Age</label>
+                <input type="text" class="form-control" name="email" #age="ngModel" [(ngModel)]="ProfileModel.age">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Phone</label>
+                <input type="email" class="form-control" name="phone" #phone="ngModel" [(ngModel)]="ProfileModel.phone">
+              </div>
+              
+  
+            </form>
+  
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="button" class="btn btn-danger text-center" data-bs-dismiss="modal"> <i class="fa fa-times-circle" aria-hidden="true"></i> Close</button>
+            <button type="submit" data-bs-dismiss="modal" class="btn btn-warning text-center" (click)="userUpdate()">  <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+              Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="modal fade" id="deleteHotel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+              Delete Account:
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+  
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input  placeholder="Enter your Password for Delete" name="password" type="password" class="form-control">
+            </div>
+            <div class=" modal-footer justify-content-center">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                <i class="fa fa-times-circle" aria-hidden="true"></i>
+                Cancel</button>
+              <button  (click)="deleteHotel(UserRest.getIdentity()._id)" type="submit" data-bs-dismiss="modal" class="btn btn-danger">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                Delete Account
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>

@@ -1,0 +1,56 @@
+
+
+body{
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+.jumbotron {
+    height: 800px;
+    color: #ffff;
+
+}
+
+.imgHome{
+ 
+  margin: -2% ;
+ float:right;
+ position: absolute;
+}
+
+
+button{
+  justify-content: center;
+  align-items: center;
+  margin: 0% 15% 0 7%;
+  background-color:rgb(10, 10, 46);
+}
+
+
+
+.sec-pricing{
+    margin-top: -220px;
+   }  
+
+
+.col{
+  align-content: flex-end ;
+}
+
+#cards{
+  height: 80px;
+  width: 90%;
+  margin: 15% 6% ;
+}
+
+#boton{
+  margin-left: 150px;
+}
+
+h4{
+  font-size: 50px;
+  margin-top: 20px;
+  margin-left: 20px;
+}

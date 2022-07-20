@@ -1,0 +1,42 @@
+<nav>
+  <body>
+    <div class="navbar-nav">
+    <ul>
+      <li style="--clr:#31C211" class="text-left">
+        <a routerLink="/" data-text="&nbsp;FITAPP">&nbsp;FITAPP&nbsp;</a>
+      </li>
+      <li style="--clr:#ff6493">
+        <a *ngIf="!token"  routerLink="/login" data-text="&nbsp;Login">&nbsp;Login&nbsp;</a>
+      </li>
+      <li style="--clr:#00dc82">
+        <a *ngIf="!token" routerLink="/register" data-text="&nbsp;Register">&nbsp;Register&nbsp;</a>
+      </li>
+      <li style="--clr:#1DE8E5">
+        <a *ngIf="token && identity.role === 'ADMIN' || identity.role === 'MANAGER'"   routerLink="/users" data-text="&nbsp;USERS">&nbsp;USERS&nbsp;</a>
+      </li>
+      <li style="--clr:#A52CDA">
+        <a *ngIf="token"  routerLink="/food" data-text="&nbsp;RECIPES">&nbsp;RECIPES&nbsp;</a>
+      </li>
+      <li style="--clr:#ff6493">
+        <a *ngIf="token"  routerLink="/routine" data-text="&nbsp;ROUTINES">&nbsp;ROUTINES&nbsp;</a>
+      </li>
+      <li style="--clr:#FF001F">
+        <a *ngIf="token"  routerLink="/restaurant" data-text="&nbsp;RESTAURANTS">&nbsp;RESTAURANTS&nbsp;</a>
+      </li>
+      <li style="--clr:#FFAE00">
+        <a *ngIf="!token"  routerLink="/about" data-text="&nbsp;ABOUT_US">&nbsp;ABOUT_US&nbsp;</a>
+      </li>
+      <li style="--clr:#FFAE00">
+        <a *ngIf="token"  routerLink="/profile" data-text="&nbsp;MY_PROFILE">&nbsp;MY_PROFILE&nbsp;</a>
+      </li>
+      <div class="navbar-nav" *ngIf="token" >  
+        <li style="--clr:#DD3C1F">
+          <a class="nav-link" (click)="logOut();" type="button" routerLink="/" data-text="&nbsp;LogOut">&nbsp;LogOut&nbsp;</a>
+        </li>
+        </div>
+     
+  
+    </ul>
+  </div>
+  </body>
+  </nav> 

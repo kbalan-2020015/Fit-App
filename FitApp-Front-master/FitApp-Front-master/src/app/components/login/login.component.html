@@ -1,0 +1,58 @@
+
+<div style="width: 50%; float:left">
+
+    
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="../../../assets/images/recetas.webp" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="https://media-cdn.tripadvisor.com/media/photo-s/11/eb/33/64/infusion-hope.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="https://d3wo5wojvuv7l.cloudfront.net/t_square_limited_720/images.spreaker.com/original/45c8dfe85fc5f268cc0b6b518ecde224.jpg" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+ </div>
+ 
+ <div style="width: 50%; float:right" id="der">
+
+    
+        <div class="div mr-2 w-100">
+        </div>
+        <div class="align-self-center w-100 px-lg-5 py-lg-4 p-3">
+            <img src="../../../assets/images/logo.png" height="1%">
+            <h1 class="font-weight-bold mb-4 letras text-center">Welcome </h1>
+            <form (ngSubmit)="login()" class="mb-2">
+                <div class="mb-1">
+                    <label for="exampleInputEmail1" class="form-label font-weight-bold">Username</label>
+                    <input [(ngModel)]="user.username" name="username" type="text"
+                        class="form-control bg-dark-x border-2" id="login" placeholder="Type your username"
+                        aria-describedby="emailHelp">
+                </div>
+                <div class="mb-4">
+                    <label for="exampleInputPassword1" class="form-label font-weight-bold">Password</label>
+                    <input [(ngModel)]="user.password" name="password" type="password" id="password"
+                        class="form-control bg-dark-x border-2 mb-2" placeholder="Type your password">
+                </div>
+                <button type="submit" class="btn btn-success w-100">Log In</button>
+                <div class="text-center px-lg-5 pt-lg-3 pb-lg-4 p-4 mt-1 w-100">
+                  <h5 class=" letras d-inline-block mb-0">¿Dont have an account?</h5> <a routerLink="/register"
+                      class="text-light font-weight-bold text-decoration-none"> Create one now</a>
+              </div>
+            </form>
+            
+        </div>
+    
+ </div>
+ 
